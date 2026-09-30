@@ -15,6 +15,7 @@ EDIT_SV_TOOLS = { -- tools for editing SVs
     'Reverse Scroll',
     'Scale (Displace)',
     'Scale (Multiply)',
+    'SSF Counteract',
     'Split',
     'Swap Notes',
     'Vertical Shift',
@@ -43,6 +44,7 @@ function editSVTab()
     if toolName == 'Reverse Scroll' then reverseScrollMenu() end
     if toolName == 'Scale (Displace)' then scaleDisplaceMenu() end
     if toolName == 'Scale (Multiply)' then scaleMultiplyMenu() end
+    if toolName == 'SSF Counteract' then ssfCounteractMenu() end
     if toolName == 'Split' then splitMenu() end
     if toolName == 'Swap Notes' then swapNotesMenu() end
     if toolName == 'Vertical Shift' then verticalShiftMenu() end
@@ -67,6 +69,7 @@ function chooseEditTool()
         'Reverse the scroll direction using SVs.',
         'Scale SV values by adding teleport SVs.',
         'Scale SV values by multiplying.',
+        'Keep selected note heads at their original positions while SSF scales long note bodies.',
         'Split notes into different timing groups for finer control.',
         'Swap positions of notes using SVs.',
         'Adds a constant value to SVs in a range.',

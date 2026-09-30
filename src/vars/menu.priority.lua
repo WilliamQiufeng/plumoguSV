@@ -136,6 +136,9 @@ DEFAULT_STARTING_MENU_VARS = {
         distance = 100,
         ratio = 0.6,
     },
+    ssfCounteract = {
+        tolerance = 1,
+    },
     split = {
         modeIndex = 1,
         cloneSVs = false,
