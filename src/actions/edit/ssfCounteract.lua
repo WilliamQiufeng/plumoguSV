@@ -1,4 +1,5 @@
-local MAX_COUNTERACT_SVS = 5000
+local MAX_COUNTERACT_SVS = 50000000
+local INVISIBLE_DISPLACEMENT = 10727
 
 local function isFinite(value)
     return type(value) == 'number' and value == value and value ~= math.huge and value ~= -math.huge
@@ -113,7 +114,7 @@ function buildSSFCounteractSVs(startTime, hitTime, svs, ssfs, initialSV, toleran
 
     local function desiredDistance(time)
         local factor = factorAt(ssfs, time)
-        if not isFinite(factor) or factor == 0 then return nil end
+        if not isFinite(factor) or factor == 0 then return INVISIBLE_DISPLACEMENT end
         return (hitPosition - position(time)) / factor
     end
 
@@ -143,15 +144,12 @@ function buildSSFCounteractSVs(startTime, hitTime, svs, ssfs, initialSV, toleran
         if
             not isFinite(leftFactor)
             or not isFinite(rightFactor)
-            or leftFactor == 0
-            or rightFactor == 0
-            or leftFactor * rightFactor < 0
         then
-            return nil, 'SSF reaches zero inside the approach.'
+            return nil, 'SSF reaches infinity inside the approach.'
         end
         local leftDistance, rightDistance = desiredDistance(left), desiredDistance(right)
         if not leftDistance or not rightDistance or not addSegment(left, right, leftDistance, rightDistance) then
-            return nil, 'The tolerance needs more than 5,000 SV points or exceeds timestamp precision.'
+            return nil, 'The tolerance needs more than' .. MAX_COUNTERACT_SVS .. ' SV points or exceeds timestamp precision.'
         end
     end
     return result
@@ -219,7 +217,7 @@ function ssfCounteract(menuVars)
             end
             newSVs[#newSVs + 1] = createSV(hitTime, multiplierAt(svs, hitTime, source.InitialScrollVelocity))
             if #newSVs > MAX_COUNTERACT_SVS then
-                toggleablePrint('e!', 'The timing group needs more than 5,000 SV points.')
+                toggleablePrint('e!', 'The timing group needs more than' .. MAX_COUNTERACT_SVS .. ' SV points.')
                 return
             end
             table.sort(newSVs, sortAscendingStartTime)
