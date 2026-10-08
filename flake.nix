@@ -77,7 +77,13 @@
         let pkgs = nixpkgs.legacyPackages.${system};
         in {
           default = pkgs.mkShell {
-            packages = [ pkgs.nodejs_22 pkgs.typescript pkgs.stylua ];
+            packages = [
+              pkgs.nodejs_22
+              pkgs.typescript
+              pkgs.stylua
+              pkgs.ffmpeg-headless
+              (pkgs.python3.withPackages (ps: [ ps.numpy ]))
+            ];
           };
         });
     };

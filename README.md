@@ -27,6 +27,12 @@ Run `nix develop` for Node.js, TypeScript, and StyLua. Inside the shell, run `np
 
 Run `nix build` to compile and package the plugin. The result contains the installable GitHub plugin under `result/share/quaver/Plugins/`, the release ZIP under `result/share/plumoguSV/`, and the Steam package in the same directory. `nix flake check` builds the package and validates its release files. There is no separate automated test suite in this repository.
 
+## MP3 spectrum map generator
+
+In the Nix development shell, run `python3 scripts/mp3_bars_to_qua.py song.mp3 --ln-length-ms 1000`. The script creates `song_bars/bars.qua` and `song_bars/audio.mp3`. It uses ten frequency bands by default; `--keys` sets 1–10 bars, `--fps` sets SSF samples per second, and `--out-dir` sets the output folder. Each long note starts at the end of the audio and extends by the configured length. Open the `.qua` in Quaver and apply SSF Counteract manually.
+
+Run `python3 tests/test_mp3_bars_to_qua.py` for the generator smoke check.
+
 ## Plugin Overview
 
 plumoguSV makes working with SVs quick and easy!
